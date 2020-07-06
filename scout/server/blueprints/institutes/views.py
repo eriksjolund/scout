@@ -340,3 +340,14 @@ def clinvar_submissions(institute_id):
         "casedata_header_fields": CASEDATA_HEADER,
     }
     return data
+
+
+@blueprint.route("/<institute_id>/advanced_phenotypes", methods=["GET"])
+@templated("overview/advanced_phenotypes.html")
+def advanced_phenotypes(institute_id):
+    """Show institute-level advanced phenotypes"""
+    institute_obj = institute_and_case(store, institute_id)
+    data = {
+        "institute": institute_obj,
+    }
+    return data
