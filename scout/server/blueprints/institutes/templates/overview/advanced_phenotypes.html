@@ -1,0 +1,33 @@
+{% extends "layout_bs4.html" %}
+{% from "overview/institute_sidebar.html" import institute_actionbar %}
+
+{% block title %}
+  {{ super() }} - {{ institute.display_name }} - Advanced phenotype models
+{% endblock %}
+
+{% block top_nav %}
+  {{ super() }}
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('cases.index') }}">Institutes</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="#">Advanced phenotype models </a>
+  </li>
+{% endblock %}
+
+
+{% macro advanced_phenotypes() %}
+HERE GOES THE PAGE CONTENT
+{%endmacro%}
+
+
+{% block content_main %}
+<div class="container-float">
+  <div class="row" id="body-row"> <!--sidebar and main container are on the same row-->
+    {{ institute_actionbar(institute) }} <!-- This is the sidebar -->
+  <div class="col">
+    {{ advanced_phenotypes() }}
+  </div>
+</div><!-- end of body row div -->
+</div><!-- end of container-float-->
+{% endblock %}
