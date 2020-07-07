@@ -24,7 +24,7 @@ from scout.constants import (
 )
 from scout.server.extensions import store
 from scout.server.utils import user_institutes, templated, institute_and_case
-from .forms import InstituteForm, GeneVariantFiltersForm, PhenoPanel
+from .forms import InstituteForm, GeneVariantFiltersForm, PhenoModelForm
 
 LOG = logging.getLogger(__name__)
 
@@ -350,9 +350,26 @@ def advanced_phenotypes(institute_id):
     institute_obj = institute_and_case(store, institute_id)
 
     if request.form.get("create_panel"):  # creating a new phenopanel
-        controllers.new_phenopanel(store, institute_id, request)
+        if controllers.new_phenomodel(store, institute_id, request) is not None:
+            flash(
+                f"Phenotype panel {request.form.get('panel_name')} was successfully created.",
+                "success",
+            )
 
-    pheno_form = PhenoPanel(request.form)
+    pheno_form = PhenoModelForm(request.form)
+    phenomodels = store.phenomodels(institute_id)
 
-    data = {"institute": institute_obj, "pheno_form": pheno_form}
+    data = {"institute": institute_obj, "pheno_form": pheno_form, "phenomodels": phenomodels}
     return data
+
+
+@blueprint.route("/advanced_phenotypes/<model_id>/remove", methods=["POST"])
+def remove_phenomodel(model_id):
+    """Remove an entire phenomodel using its _id"""
+    model_obj = store.phenomodel_collection.find_one_and_delete({"_id": model_id})
+    if model_obj is not None:
+        flash(f"Phenotype model {model_obj['name']} was deleted from the database.", "success")
+    else:
+        flash(f"Could not delete {model_obj['name']} from the database.", "info")
+
+    return redirect(request.referrer)

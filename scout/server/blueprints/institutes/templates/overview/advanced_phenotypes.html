@@ -5,6 +5,13 @@
   {{ super() }} - {{ institute.display_name }} - Advanced phenotype models
 {% endblock %}
 
+{% block css %}
+{{ super() }}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
+{% endblock %}
+
 {% block top_nav %}
   {{ super() }}
   <li class="nav-item">
@@ -39,16 +46,46 @@
   </div>
 {% endmacro %}
 
-{% macro list_models() %}
-
+{% macro phenopanel_list() %}
+  <div class="card mt-3">
+    <div class="card-body" style="overflow-y: auto; height: 700px;">
+      <table id="phenomodels" class="table display table-sm" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Subpanels</th>
+            <th>Terms</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for model in phenomodels %}
+            <tr>
+              <td>{{model.name}}</td>
+              <td>{{model.description}}</td>
+              <td></td>
+              <td></td>
+              <td>{{model.created.strftime('%Y-%m-%d')}}</td>
+              <td>{{model.updated.strftime('%Y-%m-%d')}}</td>
+              <td><form action="{{ url_for('overview.remove_phenomodel', model_id=model._id) }}">
+                <button type="submit" class="btn btn-danger btn-xs"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
+              </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endmacro %}
-
-
 
 
 {% macro advanced_phenotypes() %}
   {{ create_model() }}
-  {{ list_models() }}
+  {{ phenopanel_list() }}
 {% endmacro %}
 
 
@@ -61,4 +98,21 @@
   </div>
 </div><!-- end of body row div -->
 </div><!-- end of container-float-->
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.bootstrap4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#phenomodels').DataTable( {
+        paging: false,
+    } );
+} );
+</script>
 {% endblock %}

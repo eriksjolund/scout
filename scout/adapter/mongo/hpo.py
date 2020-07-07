@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import datetime
 
 import operator
 
@@ -123,10 +124,23 @@ class HpoHandler(object):
         sorted_genes = sorted(genes.items(), key=operator.itemgetter(1), reverse=True)
         return sorted_genes
 
-    def create_phenopanel(self, institute_id, name, description):
+    def phenomodels(self, institute_id):
+        """Return all phenopanels for a given institute
+
+        Args:
+            institute_id(str): institute id
+
+        Returns:
+            phenotype_models(pymongo.cursor.Cursor)
+        """
+        phenotype_models = self.phenopanel_collection.find({"institute": institute_id})
+        return phenotype_models
+
+    def create_phenomodel(self, id, institute_id, name, description):
         """Create an empty advanced phenotype panel with data provided by a user
 
         Args:
+            id(str) a md5_key id
             institute_id(str): institute id
             name(str) a panel name
             description(str) a panel description
@@ -134,3 +148,13 @@ class HpoHandler(object):
         Returns:
             phenopanel_obj(dict) a newly created panel
         """
+        phenopanel_obj = dict(
+            _id=id,
+            institute=institute_id,
+            name=name,
+            description=description,
+            created=datetime.datetime.now(),
+            updated=datetime.datetime.now(),
+        )
+        phenopanel_obj = self.phenopanel_collection.insert_one(phenopanel_obj)
+        return phenopanel_obj

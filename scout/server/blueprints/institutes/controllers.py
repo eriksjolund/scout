@@ -12,6 +12,8 @@ from scout.server.blueprints.genes.controllers import gene
 from scout.server.blueprints.variant.utils import predictions
 from scout.server.extensions import store
 from scout.server.utils import user_institutes
+from scout.utils.md5 import generate_md5_key
+
 
 TRACKS = {"rare": "Rare Disease", "cancer": "Cancer"}
 
@@ -458,7 +460,7 @@ def clinvar_lines(clinvar_objects, clinvar_header_obj):
     return clinvar_lines
 
 
-def new_phenopanel(store, institute_id, request):
+def new_phenomodel(store, institute_id, request):
     """Create a new advanced phenotype panel for one institute
 
     Args:
@@ -469,7 +471,15 @@ def new_phenopanel(store, institute_id, request):
     Returns:
         pheno_panel(dict)
     """
-    panel_name = request.form.("panel_name")
-    panel_desc = request.form.("panel_desc")
+    panel_name = request.form.get("panel_name")
+    panel_desc = request.form.get("panel_desc")
+    id = generate_md5_key([institute_id, panel_name])
+    if store.phenopanel_collection.find_one({"_id": id}) is not None:
+        flash(
+            f"A phenotype panel with name {panel_name} already exists for this institute.",
+            "warning",
+        )
+        return
 
-    new_panel = store.create_phenopanel(institute_id, panel_name, panel_desc)
+    new_panel = store.create_phenomodel(id, institute_id, panel_name, panel_desc)
+    return new_panel

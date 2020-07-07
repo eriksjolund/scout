@@ -99,7 +99,7 @@ class PhenoSubPanel(FlaskForm):
     # hpo_terms = MultiCheckboxField('BaseTerms')
 
 
-class PhenoPanel(FlaskForm):
+class PhenoModelForm(FlaskForm):
     """Base Phenopanel form, not including any subpanel"""
 
     panel_name = TextField("Phenotype panel name", validators=[validators.InputRequired()])
