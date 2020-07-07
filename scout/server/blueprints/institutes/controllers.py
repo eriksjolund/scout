@@ -456,3 +456,20 @@ def clinvar_lines(clinvar_objects, clinvar_header_obj):
 
     clinvar_lines = clinvar_submission_lines(clinvar_objects, clinvar_header_obj)
     return clinvar_lines
+
+
+def new_phenopanel(store, institute_id, request):
+    """Create a new advanced phenotype panel for one institute
+
+    Args:
+        store(adapter.MongoAdapter)
+        request(flask.request) POST request sent by form submission
+        institute_id(str) institute id
+
+    Returns:
+        pheno_panel(dict)
+    """
+    panel_name = request.form.("panel_name")
+    panel_desc = request.form.("panel_desc")
+
+    new_panel = store.create_phenopanel(institute_id, panel_name, panel_desc)

@@ -104,6 +104,7 @@ class MongoAdapter(
         self.transcript_collection = database.transcript
         self.filter_collection = database.filter
         self.cytoband_collection = database.cytoband
+        self.phenopanel_collection = database.phenopanel
 
     def collections(self):
         """Return all collection names

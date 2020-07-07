@@ -10,15 +10,46 @@
   <li class="nav-item">
     <a class="nav-link" href="{{ url_for('cases.index') }}">Institutes</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('overview.cases', institute_id=institute._id) }}">{{ institute.display_name }} cases </a>
+  </li>
   <li class="nav-item active">
     <a class="nav-link" href="#">Advanced phenotype models </a>
   </li>
 {% endblock %}
 
+{% macro create_model() %}
+  <div class="card mt-3">
+    <div class="card-body" style="padding-top:0px; padding-top:0px">
+      <h5 class="card-title">Create new phenotype panel</h5>
+      <form action="{{ url_for('overview.advanced_phenotypes', institute_id=institute._id) }}" method="POST">
+        <div class="form-row">
+          <div class="col-4">
+            {{ pheno_form.panel_name(class="form-control", placeholder="Name") }}
+          </div>
+          <div class="col-6">
+            {{ pheno_form.panel_desc(class="form-control", placeholder="Description (optional)") }}
+          </div>
+          <div class="col-2">
+            {{ pheno_form.create_panel(class="form-control") }}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro list_models() %}
+
+{% endmacro %}
+
+
+
 
 {% macro advanced_phenotypes() %}
-HERE GOES THE PAGE CONTENT
-{%endmacro%}
+  {{ create_model() }}
+  {{ list_models() }}
+{% endmacro %}
 
 
 {% block content_main %}

@@ -9,6 +9,8 @@ from wtforms import (
     TextField,
     validators,
     Field,
+    FormField,
+    FieldList,
 )
 from scout.constants import PHENOTYPE_GROUPS
 
@@ -87,3 +89,26 @@ class GeneVariantFiltersForm(FlaskForm):
     phenotype_groups = TagListField("Phenotype groups")
     similar_case = TagListField("Phenotypically similar case")
     cohorts = TagListField("Cohorts")
+
+
+### Phenopanels form fields ###
+class PhenoSubPanel(FlaskForm):
+    """A form corresponfing to a phenopanel sub-panel"""
+
+    subpanel_name = TextField("HPO category", validators=[validators.InputRequired()])
+    # hpo_terms = MultiCheckboxField('BaseTerms')
+
+
+class PhenoPanel(FlaskForm):
+    """Base Phenopanel form, not including any subpanel"""
+
+    panel_name = TextField("Phenotype panel name", validators=[validators.InputRequired()])
+    panel_desc = TextField("Description", validators=[validators.Optional()])
+    # subpanels = FieldList(FormField(PhenoSubPanel()))
+    create_panel = SubmitField("create")
+
+
+class MultiCheckboxField(SelectMultipleField):
+    """Populates the checkbox list of base terms in a PhenoSubPanel"""
+
+    pass

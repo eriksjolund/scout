@@ -122,3 +122,15 @@ class HpoHandler(object):
 
         sorted_genes = sorted(genes.items(), key=operator.itemgetter(1), reverse=True)
         return sorted_genes
+
+    def create_phenopanel(self, institute_id, name, description):
+        """Create an empty advanced phenotype panel with data provided by a user
+
+        Args:
+            institute_id(str): institute id
+            name(str) a panel name
+            description(str) a panel description
+
+        Returns:
+            phenopanel_obj(dict) a newly created panel
+        """

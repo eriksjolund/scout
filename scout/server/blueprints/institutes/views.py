@@ -24,7 +24,7 @@ from scout.constants import (
 )
 from scout.server.extensions import store
 from scout.server.utils import user_institutes, templated, institute_and_case
-from .forms import InstituteForm, GeneVariantFiltersForm
+from .forms import InstituteForm, GeneVariantFiltersForm, PhenoPanel
 
 LOG = logging.getLogger(__name__)
 
@@ -342,12 +342,17 @@ def clinvar_submissions(institute_id):
     return data
 
 
-@blueprint.route("/<institute_id>/advanced_phenotypes", methods=["GET"])
+@blueprint.route("/<institute_id>/advanced_phenotypes", methods=["GET", "POST"])
 @templated("overview/advanced_phenotypes.html")
 def advanced_phenotypes(institute_id):
     """Show institute-level advanced phenotypes"""
+
     institute_obj = institute_and_case(store, institute_id)
-    data = {
-        "institute": institute_obj,
-    }
+
+    if request.form.get("create_panel"):  # creating a new phenopanel
+        controllers.new_phenopanel(store, institute_id, request)
+
+    pheno_form = PhenoPanel(request.form)
+
+    data = {"institute": institute_obj, "pheno_form": pheno_form}
     return data
