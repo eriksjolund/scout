@@ -25,6 +25,25 @@
   </li>
 {% endblock %}
 
+{% macro confirm_delete() %}
+<form action="{{ url_for('overview.remove_phenomodel') }}" method="POST">
+  <input id="modelId" type="hidden" value="" name="modelId">
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Confirm delete this panel?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endmacro %}
+
 {% macro create_model() %}
   <div class="card mt-3">
     <div class="card-body" style="padding-top:0px; padding-top:0px">
@@ -70,9 +89,8 @@
               <td></td>
               <td>{{model.created.strftime('%Y-%m-%d')}}</td>
               <td>{{model.updated.strftime('%Y-%m-%d')}}</td>
-              <td><form action="{{ url_for('overview.remove_phenomodel', model_id=model._id) }}" method="POST">
-                <button type="submit" class="btn btn-danger btn-sm"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
-              </form>
+              <td>
+                <button type="submit" id="" class="btn btn-danger btn-sm removeModel" data-id="{{model._id}}" aria-hidden="true" data-toggle="modal" data-target="#deleteModal"><span class="fa fa-trash-o fa-lg"></span></button>
               </td>
             </tr>
           {% endfor %}
@@ -84,6 +102,7 @@
 
 
 {% macro advanced_phenotypes() %}
+  {{ confirm_delete() }}
   {{ create_model() }}
   {{ phenopanel_list() }}
 {% endmacro %}
@@ -113,6 +132,11 @@
     $('#phenomodels').DataTable( {
         paging: false,
     } );
-} );
+  } );
+
+  $(document).on("click", ".removeModel", function () {
+    var modelId = $(this).data('id');
+    $('input#modelId').val(modelId);
+});
 </script>
 {% endblock %}

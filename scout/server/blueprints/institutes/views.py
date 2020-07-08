@@ -359,16 +359,23 @@ def advanced_phenotypes(institute_id):
     pheno_form = PhenoModelForm(request.form)
     phenomodels = store.phenomodels(institute_id)
 
-    data = {"institute": institute_obj, "pheno_form": pheno_form, "phenomodels": phenomodels}
+    data = {
+        "institute": institute_obj,
+        "pheno_form": pheno_form,
+        "phenomodels": phenomodels,
+    }
     return data
 
 
-@blueprint.route("/advanced_phenotypes/<model_id>/remove", methods=["POST"])
-def remove_phenomodel(model_id):
+@blueprint.route("/advanced_phenotypes/remove", methods=["POST"])
+def remove_phenomodel():
     """Remove an entire phenomodel using its _id"""
+    model_id = request.form.get("modelId")
     model_obj = store.phenomodel_collection.find_one_and_delete({"_id": model_id})
     if model_obj is not None:
-        flash(f"Phenotype model {model_obj['name']} was deleted from the database.", "success")
+        flash(
+            f"Phenotype model {model_obj['name']} was deleted from the database.", "success",
+        )
     else:
         flash(f"Could not delete {model_obj['name']} from the database.", "info")
 
