@@ -133,7 +133,7 @@ class HpoHandler(object):
         Returns:
             phenotype_models(pymongo.cursor.Cursor)
         """
-        phenotype_models = self.phenopanel_collection.find({"institute": institute_id})
+        phenotype_models = self.phenomodel_collection.find({"institute": institute_id})
         return phenotype_models
 
     def create_phenomodel(self, id, institute_id, name, description):
@@ -156,5 +156,5 @@ class HpoHandler(object):
             created=datetime.datetime.now(),
             updated=datetime.datetime.now(),
         )
-        phenopanel_obj = self.phenopanel_collection.insert_one(phenopanel_obj)
+        phenopanel_obj = self.phenomodel_collection.insert_one(phenopanel_obj)
         return phenopanel_obj

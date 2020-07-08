@@ -474,7 +474,7 @@ def new_phenomodel(store, institute_id, request):
     panel_name = request.form.get("panel_name")
     panel_desc = request.form.get("panel_desc")
     id = generate_md5_key([institute_id, panel_name])
-    if store.phenopanel_collection.find_one({"_id": id}) is not None:
+    if store.phenomodel_collection.find_one({"_id": id}) is not None:
         flash(
             f"A phenotype panel with name {panel_name} already exists for this institute.",
             "warning",

@@ -49,7 +49,7 @@
 {% macro phenopanel_list() %}
   <div class="card mt-3">
     <div class="card-body" style="overflow-y: auto; height: 700px;">
-      <table id="phenomodels" class="table display table-sm" cellspacing="0">
+      <table id="phenomodels" class="table table-sm" cellspacing="0">
         <thead>
           <tr>
             <th>Name</th>
@@ -70,8 +70,8 @@
               <td></td>
               <td>{{model.created.strftime('%Y-%m-%d')}}</td>
               <td>{{model.updated.strftime('%Y-%m-%d')}}</td>
-              <td><form action="{{ url_for('overview.remove_phenomodel', model_id=model._id) }}">
-                <button type="submit" class="btn btn-danger btn-xs"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
+              <td><form action="{{ url_for('overview.remove_phenomodel', model_id=model._id) }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
               </form>
               </td>
             </tr>
