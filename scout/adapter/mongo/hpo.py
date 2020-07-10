@@ -124,16 +124,21 @@ class HpoHandler(object):
         sorted_genes = sorted(genes.items(), key=operator.itemgetter(1), reverse=True)
         return sorted_genes
 
-    def phenomodels(self, institute_id):
+    def phenomodels(self, institute_id=None, model_id=None):
         """Return all phenopanels for a given institute
 
         Args:
             institute_id(str): institute id
+            model_id(str): phenomodel id
 
         Returns:
             phenotype_models(pymongo.cursor.Cursor)
         """
-        phenotype_models = self.phenomodel_collection.find({"institute": institute_id})
+        if model_id is not None:
+            query = {"_id": model_id}
+        else:
+            query = {"institute": institute_id}
+        phenotype_models = self.phenomodel_collection.find(query)
         return phenotype_models
 
     def create_phenomodel(self, id, institute_id, name, description):

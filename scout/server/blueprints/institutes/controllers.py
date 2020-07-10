@@ -11,7 +11,7 @@ from scout.parse.clinvar import clinvar_submission_header, clinvar_submission_li
 from scout.server.blueprints.genes.controllers import gene
 from scout.server.blueprints.variant.utils import predictions
 from scout.server.extensions import store
-from scout.server.utils import user_institutes
+from scout.server.utils import user_institutes, institute_and_case
 from scout.utils.md5 import generate_md5_key
 
 
@@ -460,7 +460,7 @@ def clinvar_lines(clinvar_objects, clinvar_header_obj):
     return clinvar_lines
 
 
-def new_phenomodel(store, institute_id, request):
+def update_phenomodel(store, institute_id, request):
     """Create a new advanced phenotype panel for one institute
 
     Args:
@@ -471,15 +471,48 @@ def new_phenomodel(store, institute_id, request):
     Returns:
         pheno_panel(dict)
     """
-    panel_name = request.form.get("panel_name")
-    panel_desc = request.form.get("panel_desc")
+    panel_name = request.form.get("model_name")
+    panel_desc = request.form.get("model_desc")
+    if request.form.get("update") is not None:  # update an existing model
+        store.phenomodel_collection.find_one_and_update(
+            {"_id": request.form.get("model_id")},
+            {
+                "$set": {
+                    "name": panel_name,
+                    "description": panel_desc,
+                    "updated": datetime.datetime.now(),
+                }
+            },
+        )
+        return
+    # else create a new model
     id = generate_md5_key([institute_id, panel_name])
     if store.phenomodel_collection.find_one({"_id": id}) is not None:
         flash(
-            f"A phenotype panel with name {panel_name} already exists for this institute.",
+            f"A phenotype panel with name {model_name} already exists for this institute.",
             "warning",
         )
         return
 
-    new_panel = store.create_phenomodel(id, institute_id, panel_name, panel_desc)
-    return new_panel
+    new_model = store.create_phenomodel(id, institute_id, model_name, model_desc)
+    return new_model
+
+
+def phenomodel(store, institute_id, model_id):
+    """Retrieve a phenomodel object from database for a specific institute and organize the phenomodel page content
+
+    Args:
+        institute_id(str): id of an institute
+        model_id(str): id of a phenomodel
+
+    Returns:
+        data(dict): content of phenomodel page
+    """
+    institute_obj = institute_and_case(store, institute_id)
+    phenomodels = list(store.phenomodels(model_id=model_id))
+    if len(phenomodels) == 0:
+        flash(f"Couldn't find any advanced phenotype model with the provided id", "warning")
+        return redirect(request.referrer)
+    phenomodel_obj = phenomodels[0]
+
+    return dict(phenomodel=phenomodel_obj, institute=institute_obj,)

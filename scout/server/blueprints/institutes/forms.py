@@ -15,6 +15,18 @@ from wtforms import (
 from scout.constants import PHENOTYPE_GROUPS
 
 
+def phenotype_choices():
+    """Create a list of tuples containing the options for a multiselect"""
+    hpo_tuples = []
+    for key in PHENOTYPE_GROUPS.keys():
+        option_name = " ".join(
+            [key, ",", PHENOTYPE_GROUPS[key]["name"], "(", PHENOTYPE_GROUPS[key]["abbr"], ")",]
+        )
+        hpo_tuples.append((option_name, option_name))
+
+    return hpo_tuples
+
+
 class NonValidatingSelectMultipleField(SelectMultipleField):
     """Necessary to skip validation of dynamic multiple selects in form"""
 
@@ -24,13 +36,6 @@ class NonValidatingSelectMultipleField(SelectMultipleField):
 
 class InstituteForm(FlaskForm):
     """ Instutute-specif settings """
-
-    hpo_tuples = []
-    for key in PHENOTYPE_GROUPS.keys():
-        option_name = " ".join(
-            [key, ",", PHENOTYPE_GROUPS[key]["name"], "(", PHENOTYPE_GROUPS[key]["abbr"], ")",]
-        )
-        hpo_tuples.append((option_name, option_name))
 
     display_name = TextField(
         "Institute display name",
@@ -53,7 +58,9 @@ class InstituteForm(FlaskForm):
     pheno_group = TextField("New phenotype group", validators=[validators.Optional()])
     pheno_abbrev = TextField("Abbreviation", validators=[validators.Optional()])
 
-    pheno_groups = NonValidatingSelectMultipleField("Custom phenotype groups", choices=hpo_tuples)
+    pheno_groups = NonValidatingSelectMultipleField(
+        "Custom phenotype groups", choices=phenotype_choices()
+    )
     cohorts = NonValidatingSelectMultipleField(
         "Available patient cohorts", validators=[validators.Optional()]
     )
@@ -92,20 +99,24 @@ class GeneVariantFiltersForm(FlaskForm):
 
 
 ### Phenopanels form fields ###
-class PhenoSubPanel(FlaskForm):
+class PhenoSubPanelForm(FlaskForm):
     """A form corresponfing to a phenopanel sub-panel"""
 
-    subpanel_name = TextField("HPO category", validators=[validators.InputRequired()])
-    # hpo_terms = MultiCheckboxField('BaseTerms')
+    title = TextField("HPO panel title", validators=[validators.InputRequired()])
+    subtitle = TextField("HPO panel subtitle", validators=[validators.Optional()])
+    pheno_groups = NonValidatingSelectMultipleField(
+        "Subpanel HPO groups", choices=phenotype_choices()
+    )
+    add_subpanel = SubmitField("save subpanel")
 
 
 class PhenoModelForm(FlaskForm):
     """Base Phenopanel form, not including any subpanel"""
 
-    panel_name = TextField("Phenotype panel name", validators=[validators.InputRequired()])
-    panel_desc = TextField("Description", validators=[validators.Optional()])
+    model_name = TextField("Phenotype panel name", validators=[validators.InputRequired()])
+    model_desc = TextField("Description", validators=[validators.Optional()])
     # subpanels = FieldList(FormField(PhenoSubPanel()))
-    create_panel = SubmitField("create")
+    create_model = SubmitField("create")
 
 
 class MultiCheckboxField(SelectMultipleField):

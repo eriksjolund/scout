@@ -24,7 +24,7 @@ from scout.constants import (
 )
 from scout.server.extensions import store
 from scout.server.utils import user_institutes, templated, institute_and_case
-from .forms import InstituteForm, GeneVariantFiltersForm, PhenoModelForm
+from .forms import InstituteForm, GeneVariantFiltersForm, PhenoModelForm, PhenoSubPanelForm
 
 LOG = logging.getLogger(__name__)
 
@@ -343,21 +343,21 @@ def clinvar_submissions(institute_id):
 
 
 @blueprint.route("/<institute_id>/advanced_phenotypes", methods=["GET", "POST"])
-@templated("overview/advanced_phenotypes.html")
+@templated("overview/phenomodels.html")
 def advanced_phenotypes(institute_id):
     """Show institute-level advanced phenotypes"""
 
     institute_obj = institute_and_case(store, institute_id)
 
     if request.form.get("create_panel"):  # creating a new phenopanel
-        if controllers.new_phenomodel(store, institute_id, request) is not None:
+        if controllers.update_phenomodel(store, institute_id, request) is not None:
             flash(
                 f"Phenotype panel {request.form.get('panel_name')} was successfully created.",
                 "success",
             )
 
     pheno_form = PhenoModelForm(request.form)
-    phenomodels = store.phenomodels(institute_id)
+    phenomodels = store.phenomodels(institute_id=institute_id)
 
     data = {
         "institute": institute_obj,
@@ -369,7 +369,7 @@ def advanced_phenotypes(institute_id):
 
 @blueprint.route("/advanced_phenotypes/remove", methods=["POST"])
 def remove_phenomodel():
-    """Remove an entire phenomodel using its _id"""
+    """Remove an entire phenomodel using its id"""
     model_id = request.form.get("modelId")
     model_obj = store.phenomodel_collection.find_one_and_delete({"_id": model_id})
     if model_obj is not None:
@@ -380,3 +380,27 @@ def remove_phenomodel():
         flash(f"Could not delete {model_obj['name']} from the database.", "info")
 
     return redirect(request.referrer)
+
+
+@blueprint.route("/<institute_id>/phenomodel/<model_id>", methods=["GET", "POST"])
+@templated("overview/phenomodel.html")
+def phenomodel(institute_id, model_id):
+    """View/Edit an advanced phenotype model"""
+    LOG.error("IN PHENOMODEL")
+    if request.method == "POST":
+        flash(request.form)
+        if request.form.get("update_model"):  # pdate main model
+            controllers.update_phenomodel(store, institute_id, request)
+
+    pheno_form = PhenoModelForm(request.form)
+    subpanel_form = PhenoSubPanelForm()
+
+    default_phenotypes = [choice[0].split(" ")[0] for choice in subpanel_form.pheno_groups.choices]
+
+    data = controllers.phenomodel(store, institute_id, model_id)
+    pheno_form.model_name.data = data["phenomodel"].get("name")
+    pheno_form.model_desc.data = data["phenomodel"].get("description")
+    data["pheno_form"] = pheno_form
+    data["subpanel_form"] = subpanel_form
+    data["default_phenotypes"] = default_phenotypes
+    return data
