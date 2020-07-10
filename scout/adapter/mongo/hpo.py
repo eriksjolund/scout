@@ -5,7 +5,7 @@ import datetime
 import operator
 
 from pymongo.errors import DuplicateKeyError, BulkWriteError
-from pymongo import ASCENDING
+import pymongo
 
 from scout.exceptions import IntegrityError
 
@@ -97,7 +97,11 @@ class HpoHandler(object):
             search_term = hpo_term
 
         limit = limit or int(10e10)
-        res = self.hpo_term_collection.find(query_dict).limit(limit).sort("hpo_number", ASCENDING)
+        res = (
+            self.hpo_term_collection.find(query_dict)
+            .limit(limit)
+            .sort("hpo_number", pymongo.ASCENDING)
+        )
 
         return res
 
@@ -153,7 +157,7 @@ class HpoHandler(object):
         Returns:
             phenopanel_obj(dict) a newly created panel
         """
-        phenopanel_obj = dict(
+        phenomodel_obj = dict(
             _id=id,
             institute=institute_id,
             name=name,
@@ -161,5 +165,5 @@ class HpoHandler(object):
             created=datetime.datetime.now(),
             updated=datetime.datetime.now(),
         )
-        phenopanel_obj = self.phenomodel_collection.insert_one(phenopanel_obj)
-        return phenopanel_obj
+        phenomodel_obj = self.phenomodel_collection.insert_one(phenopanel_obj)
+        return phenomodel_obj

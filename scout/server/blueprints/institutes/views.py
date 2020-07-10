@@ -386,21 +386,29 @@ def remove_phenomodel():
 @templated("overview/phenomodel.html")
 def phenomodel(institute_id, model_id):
     """View/Edit an advanced phenotype model"""
-    LOG.error("IN PHENOMODEL")
+
+    institute_obj = institute_and_case(store, institute_id)
+    pheno_form = PhenoModelForm(request.form)
+    subpanel_form = PhenoSubPanelForm(request.form)
+    default_phenotypes = [choice[0].split(" ")[0] for choice in subpanel_form.pheno_groups.choices]
+    hide_subpanel = True
+
     if request.method == "POST":
-        flash(request.form)
-        if request.form.get("update_model"):  # pdate main model
+        if request.form.get("update_model"):  # update main model
             controllers.update_phenomodel(store, institute_id, request)
 
-    pheno_form = PhenoModelForm(request.form)
-    subpanel_form = PhenoSubPanelForm()
+        if request.form.get("add_subpanel"):  # new subpanel
+            if subpanel_form.validate_on_submit() is False:
+                hide_subpanel = False
+            # create subpanel
 
-    default_phenotypes = [choice[0].split(" ")[0] for choice in subpanel_form.pheno_groups.choices]
+    phenomodel_obj = controllers.phenomodel(store, model_id)
 
-    data = controllers.phenomodel(store, institute_id, model_id)
-    pheno_form.model_name.data = data["phenomodel"].get("name")
-    pheno_form.model_desc.data = data["phenomodel"].get("description")
-    data["pheno_form"] = pheno_form
-    data["subpanel_form"] = subpanel_form
-    data["default_phenotypes"] = default_phenotypes
-    return data
+    return dict(
+        institute=institute_obj,
+        pheno_form=pheno_form,
+        phenomodel=phenomodel_obj,
+        subpanel_form=subpanel_form,
+        default_phenotypes=default_phenotypes,
+        hide_subpanel=hide_subpanel,
+    )

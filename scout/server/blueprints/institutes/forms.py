@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from flask_wtf import FlaskForm
 from wtforms.widgets import TextInput
 from wtforms import (
@@ -12,7 +13,10 @@ from wtforms import (
     FormField,
     FieldList,
 )
+from scout.server.extensions import store
 from scout.constants import PHENOTYPE_GROUPS
+
+LOG = logging.getLogger(__name__)
 
 
 def phenotype_choices():
@@ -32,6 +36,18 @@ class NonValidatingSelectMultipleField(SelectMultipleField):
 
     def pre_validate(self, form):
         pass
+
+
+class HpoListMultiSelect(SelectMultipleField):
+    """Validating a multiple select containing a list of HPO terms"""
+
+    def pre_validate(self, form):
+        hpo_term = None
+        for choice in form.pheno_groups.data:  # chech that HPO terms are valid
+            hpo_term = choice.split(" ")[0]
+            if store.hpo_term(hpo_term) is None:
+                form.pheno_groups.errors.append(f"'{hpo_term}' is not a valid HPO term")
+                return False
 
 
 class InstituteForm(FlaskForm):
@@ -102,10 +118,10 @@ class GeneVariantFiltersForm(FlaskForm):
 class PhenoSubPanelForm(FlaskForm):
     """A form corresponfing to a phenopanel sub-panel"""
 
-    title = TextField("HPO panel title", validators=[validators.InputRequired()])
-    subtitle = TextField("HPO panel subtitle", validators=[validators.Optional()])
-    pheno_groups = NonValidatingSelectMultipleField(
-        "Subpanel HPO groups", choices=phenotype_choices()
+    title = TextField("Subpanel title", validators=[validators.InputRequired()])
+    subtitle = TextField("Subpanel subtitle", validators=[validators.Optional()])
+    pheno_groups = HpoListMultiSelect(
+        "Subpanel HPO groups", choices=phenotype_choices(), validators=[validators.InputRequired()]
     )
     add_subpanel = SubmitField("save subpanel")
 

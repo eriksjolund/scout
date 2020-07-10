@@ -498,21 +498,19 @@ def update_phenomodel(store, institute_id, request):
     return new_model
 
 
-def phenomodel(store, institute_id, model_id):
+def phenomodel(store, model_id):
     """Retrieve a phenomodel object from database for a specific institute and organize the phenomodel page content
 
     Args:
-        institute_id(str): id of an institute
         model_id(str): id of a phenomodel
 
     Returns:
-        data(dict): content of phenomodel page
+        phenomodel_obj(dict): content of phenomodel
     """
-    institute_obj = institute_and_case(store, institute_id)
+
     phenomodels = list(store.phenomodels(model_id=model_id))
     if len(phenomodels) == 0:
         flash(f"Couldn't find any advanced phenotype model with the provided id", "warning")
         return redirect(request.referrer)
     phenomodel_obj = phenomodels[0]
-
-    return dict(phenomodel=phenomodel_obj, institute=institute_obj,)
+    return phenomodel_obj
