@@ -293,52 +293,56 @@
   
     // Start when window is loaded!
     window.onload=function(){
-        console.log("Window is loaded!")
-        console.log('{{case.individuals}}')
-        var individualsJson = {{case.individuals|tojson}}
-        console.log(individualsJson)
-        sex = getSex(individualsJson)
-        console.log(sex)
+        
+        if (document.getElementById('rohPanel')){
+            console.log("Window is loaded!")
+            console.log('{{case.individuals}}')
+            var individualsJson = {{case.individuals|tojson}}
+            console.log(individualsJson)
+            sex = getSex(individualsJson)
+            console.log(sex)
 
-        // convert 'case' into json, can handle null value
-        var pJ = {{case.chromograph_prefixes|tojson}}
-        var iJ = {{case.chromograph_image_files|tojson}}
+            // convert 'case' into json, can handle null value
+            var pJ = {{case.chromograph_prefixes|tojson}}
+            var iJ = {{case.chromograph_image_files|tojson}}
 
-        // testFile is a cytoband image, if configured correctly it should
-        // exist -images are drawn -otherwise the panel is hidden
-        var testFile =  '/{{institute._id}}/{{case.display_name}}/chr_images/cytoband.txt.chr1.png'
-        console.log("testfile: " +testFile)
-        if(urlExists(testFile) && pJ != null && iJ != null){
-            console.log("Draw images")
-            draw_tracks(sex)
-        }
-        else{
-            console.log("*** Not drawing ROH/Ideograms/UPDs")
-            console.log("Check testfile '%s' ", urlExists(testFile))
-            console.log("Check for chromograph_prefixes: '%s'", pJ != null)
-            console.log("Check for chromograph_image_files: '%s'", iJ != null)
-            document.getElementById('rohPanel').style.display = 'none';             // Hide div
+            // testFile is a cytoband image, if configured correctly it should
+            // exist -images are drawn -otherwise the panel is hidden
+            var testFile =  '/{{institute._id}}/{{case.display_name}}/chr_images/cytoband.txt.chr1.png'
+            console.log("testfile: " +testFile)
+            if(urlExists(testFile) && pJ != null && iJ != null){
+                console.log("Draw images")
+                draw_tracks(sex)
+            }
+            else{
+                console.log("*** Not drawing ROH/Ideograms/UPDs")
+                console.log("Check testfile '%s' ", urlExists(testFile))
+                console.log("Check for chromograph_prefixes: '%s'", pJ != null)
+                console.log("Check for chromograph_image_files: '%s'", iJ != null)
+                document.getElementById('rohPanel').style.display = 'none';             // Hide div
+            }
         }
     }
-
 
     window.onresize=function(){
         // read thouroghly:
         // https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
-        console.log("Width '%s' ", $(window).width())
-        if($(window).width() < WIDTH_BREAKPOINT){
-            var roh_svg = document.getElementById("roh_svg")
-            roh_svg.setAttribute('width', 1050)
-            roh_svg.setAttribute('height', 1250)
-            roh_svg.parentNode.replaceChild(roh_svg.cloneNode(false), roh_svg); // clear svg
-            draw_tracks(sex)
-        }
-        if($(window).width() >= WIDTH_BREAKPOINT){
-            var roh_svg = document.getElementById("roh_svg")
-            roh_svg.setAttribute('width', 1500)
-            roh_svg.setAttribute('height', 850)
-            roh_svg.parentNode.replaceChild(roh_svg.cloneNode(false), roh_svg); // clear svg
-            draw_tracks(sex)
+
+        if (document.getElementById("roh_svg")){
+            if($(window).width() < WIDTH_BREAKPOINT){
+                var roh_svg = document.getElementById("roh_svg")
+                roh_svg.setAttribute('width', 1050)
+                roh_svg.setAttribute('height', 1250)
+                roh_svg.parentNode.replaceChild(roh_svg.cloneNode(false), roh_svg); // clear svg
+                draw_tracks(sex)
+            }
+            if($(window).width() >= WIDTH_BREAKPOINT){
+                var roh_svg = document.getElementById("roh_svg")
+                roh_svg.setAttribute('width', 1500)
+                roh_svg.setAttribute('height', 850)
+                roh_svg.parentNode.replaceChild(roh_svg.cloneNode(false), roh_svg); // clear svg
+                draw_tracks(sex)
+            }
         }
 
     }
