@@ -346,13 +346,13 @@ def clinvar_submissions(institute_id):
 @templated("overview/phenomodels.html")
 def advanced_phenotypes(institute_id):
     """Show institute-level advanced phenotypes"""
-
     institute_obj = institute_and_case(store, institute_id)
 
-    if request.form.get("create_panel"):  # creating a new phenopanel
+    if request.form.get("create_model"):  # creating a new phenopanel
+        flash("HELLO!")
         if controllers.update_phenomodel(store, institute_id, request) is not None:
             flash(
-                f"Phenotype panel {request.form.get('panel_name')} was successfully created.",
+                f"Phenotype panel {request.form.get('model_name')} was successfully created.",
                 "success",
             )
 

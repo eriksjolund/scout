@@ -471,22 +471,22 @@ def update_phenomodel(store, institute_id, request):
     Returns:
         pheno_panel(dict)
     """
-    panel_name = request.form.get("model_name")
-    panel_desc = request.form.get("model_desc")
+    model_name = request.form.get("model_name")
+    model_desc = request.form.get("model_desc")
     if request.form.get("update") is not None:  # update an existing model
         store.phenomodel_collection.find_one_and_update(
             {"_id": request.form.get("model_id")},
             {
                 "$set": {
-                    "name": panel_name,
-                    "description": panel_desc,
+                    "name": model_name,
+                    "description": model_desc,
                     "updated": datetime.datetime.now(),
                 }
             },
         )
         return
     # else create a new model
-    id = generate_md5_key([institute_id, panel_name])
+    id = generate_md5_key([institute_id, model_name])
     if store.phenomodel_collection.find_one({"_id": id}) is not None:
         flash(
             f"A phenotype panel with name {model_name} already exists for this institute.",
