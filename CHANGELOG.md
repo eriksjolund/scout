@@ -6,10 +6,16 @@ About changelog [here](https://keepachangelog.com/en/1.0.0/)
 
 ## [x.x.x]
 ### Added
+- Display number of filtered variants vs number of total variants in variants page
+
 ### Fixed
+- Bug occurring when rerun is requested twice
+- Peddy info fields in the demo config file
+
 ### Changed
 - Updated the documentation on how to create a new software release
 - Genome build-aware cytobands coordinates
+- Styling update of the Matchmaker card
 
 
 ## [4.19]
