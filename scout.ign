@@ -1,0 +1,102 @@
+{
+  "ignition": {
+    "version": "3.1.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "name": "core",
+        "sshAuthorizedKeys": [
+          "ssh-rsa ssh-rsa AAAAB3NOTVALID/NOTVALID/NOTVALIDUV5Xw9QTBQEVXpEXrY1jGQ3D7ckUowZiVidT5DoPpuO36r3G4HUXolP2R/TnIM5XgrFIpkbCpOUBdV8gsjuLwh2hOIM6PlKTYWy//CnS0W0Kd0o/M8xQS+2VcOBsyKpeE2harGKLpANGcTT1rFANB/6VHh0aRqOJCfP7qt6nXvYfbr8rmA9mxEOhcwfy4zJ/ZP0tguKvnLneAX6K2+3jDy3OOIwJmkFrv0pCFJCmDcf/mV6pA6x70EE5kZpHJCS1W9sALxDfVHj1Vy15x7h+b6HSnuEGwxBCsdpDqbxElyZgK6DWTnzmVSeSoa/BNF2w8vuOkKdjklJ+p8u/tpPtPP0T+nREkv4bUsc+qG9J6vdHm8eJZP3JSmS25dxkTeFVDhf6wWpxkYoxrQEyZF0WLeNtpZua/sCp4qAtsfqg9MVg3gmD6zLuthzmV3GzT7bDzwayNnZ/CqxkT/3EY2fVMFeyjTpvM2MvwbcAjRi3gvLxHctuNhEGxysbIi4xkL8= example@laptop"
+        ]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system/scout-pod.service",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/7STzWobMRDH73oKXXKUvS6UQkGHBKfFFKcmtinFmKCsZt0h2hl1JKXN25fdtZ3iuDSXXISYv/Sb782aMG/VFFItGDMy2QX71pFONZdsIvtRAnnEGtQ3RzlZgvyL5WGUnewgq8smgxyMhikgwUG7hZ8FBZLdw2oBl8F4l51HOXD3Ysu04xNbglyi8dC+ELrzGNgVNCzw1l7UZjnctmqdQGzNAuqzcInD9ZoeUZhaoGwXX6fzy5u75ffl6no+vVvfzFb2gtQtpOwkWybTOAyl+/Ub6mVnXAjY8T3SWFptGn2Rx88diOhPDOwN+pPPJUkPiEMDI3s91EIbg9SIMzVTy2Qi+gYDvPRhzAA2Z+Re6F6U+4Dph568+zCqRtVo8vF9VVX9oY0h18Lz6GhjBGJw9V95no2zL8v/3e8pHP8B4diluiMWeE0uWU+qI3LB6XxsXT+O0OYVQS5m008YwJ6WV33BEObswRITqNVTBNuwPCDtlNrMKGUXwrZfM/BXT7YtIaMpCWS/UNpD40rIx90Lie3bDv2fAAAA//9Fq7xPIAQAAA=="
+        },
+        "mode": 420
+      },
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system/scout-create-datadir.service",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/3RRz6vaQBC+z19hD++YF2897eG9JhQpWjGRUkRkmx11cDMTZifW/PfFpLZg6WVZZub7wffttky2hwJTo9QZCbu1hNbzLDXSW9YoesMsePOB9DWhXqlB+ObZkmO0n6KXV/N6QoO3o6E+hplwJMbH7p04pFrcxNpJ+EM1of6dwyfhQHdHa2/nRSpIsTHRwX14qfLpvhU+yWguvz8Au2pC72GbUF0jivBZpe+mb8lXUuEW2dz6a7F8Wx2q71VdLovDdrWo3QvDBpN5NSecHT3FXhGgMm/4V/9Z+2m/lIBu/nE+h/KGTTWy5T+I8/YSSGf/N/+FYhzBLIxQDx06YUxnMdhg64nHqMobmRswAewWnMzHuB/rwPA+uLaPRlmfUH8HPwt49H20Rw+/AgAA//9H7XOM8AEAAA=="
+        },
+        "mode": 420
+      },
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system/scout-mongo.service",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/4STQWvbQBCF7/sr9pLjRO6pENhDgtMSSlJTO5Q2hLDeHZkhqxkxO0rrf19kOanrhOYihnnab6T3Zu9umezezbEmpd5IOCwkd5F9TTIYdMIbOa2oT5TQfY9sNTDaL9HHU4u6QXPnraE+N0G4EOOzdkGc60rCBOslv6CmU6/6+7FJMRpCjhYz6dH8/77i7pZTde9uK2pIoug+qwz9VF7yE6lwh2xh8XV+fX7zsPyxXF1ezx9ub65W4YTdN6wW1YIwtJHKoOiWFg3npJhMdBsOvNl9wJF+LRnD7ONs5i5/Y1qOsIViaNbEjXYeWn9izaG/PeXjVjIFyn8BoRmq7gj9lI8O7AGScCcMPeWWCr7FBUhvi9OEUd+M9tTAssd5GCMByvDvuTGnSfAAin2JCT0Axw4P18XDqD9JGToMJ8vm2K1mfJw1U7k+++kBKqZBybYgvfkS11hCphrXBX2W9Ih6StIUWmvUbbMj7Z2R/pUx1aT3ALRhUXz/981/mL3AFlLfcLo7wLXvEd3iav6JCobXWbgvVMpuOVgY3WrbY2hFH4k3zt1dcbVYyv1uyzFfbEM3FCMYKur+PvmMbRyKPV+vPwEAAP//LkMHsb4DAAA="
+        },
+        "mode": 420
+      },
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system/scout-setup-demo.service",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/4yTTY8aPQzH7/kUeQ4cs8PtOeWwW1C1qtgiBlRVCI1CYsBqxp4mzha+fTUMbLdLW+1lNPLLz7H/9npFKBs1gewTdoJMds6hdaSz5yImg5TOBGj5LkN6Rg/qiyPJlkB+cPp2Jy7tQdT9TiBdjYYpIsHV94AU8pLtQOw4vKCGrBv7pXbLtH8pq9UCvhdMkN8Xrz4wBewbmjs5TI+YJdv/RnX1KtYEJ67qm2sOLjdbAGoySFM6pdb1wNmoVYZkPSdQHxOXbvid0jMmphZI7PzzZHb/1NRf6+V0NmlWT49LOyK1gCwuiWUyO4exJFCqFicwwQReOJ3s27e88c84gB3/Px6r6RF83dPmCWy1RapSq81Oj6S60anD8Ee7l2Qw/ELZquR0ZnWD4qmQNsYztUymw7DDCH+tYIz/R8RQqw/a9zPLlvgC1qZXzmAwvyf3cg4ObUyCLjoP2hhyLdysojYmgy8J5WS4Ex3dFqINmN02go7sXTxwvpD15dtn6z771TA5yzBN4eIP+t3b8QljPItDTKCWpw4sE+QDi1pA65DOiz09otgTZKXWj5TFxbg5Hw+Eh5NtSxQ0JUO6nIkOsHMlyvVqfgYAAP//C7wKVZoDAAA="
+        },
+        "mode": 420
+      },
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system/scout-scout.service",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/4yUUU8jOQzH3/MpLCF0T6Hl6U4n5QFU7oTuyla0aLVCCKWJp3ibsWcTB7b76VfTaYEFVvBSpf7bvzh/J3N9xaQ3ZoIlZOqUhN1MYusZSpCqdvt7VDDfU0Dz2bMWx6gPktdH6vMK1ZwSx7IQNxR0Eh/TTxrFvE+3wokYd1XwKnsXaYVX8iJWUGtnI7ZPgrnEb5UyFvch0K7z3+GMuZ4PqxtzVTC7IBnNv1lqNyzP+J6ycIusbvZpMj25uJ1/mS/OppPbq4vzhTtkc4lFfVYnbBtPqfZV3zHM++AsoxstiUe5BdvAoY6eu9tRfBkKmi3FJ4Ab1ZK3hG6YTq4MNoK1QbgVth3FhhK+hbY2vC0Om/T6qj9pcSw7HNjeUEvR/lrXuzwIYG3GLvmAYC37Fp/fF7C2YKiZdGOlU0h+iclFKn6ZEKKENeYjkhFmWpevkirHYYO/B+2uLmEP6scE/Zj2dkr3yoyi0oG1tGLJ+P55FY7Hj7CZlDfcbZ/hmveIZnY++YcSutfmm/8opalEdCyMZrHp0DWS18QrcwCzmhLxCvQOIQirJ8b8QX+aLC1MHv+2fgPq1wgeHu76Tn0B0gKFfiBQAb/s7fxzPIbp0hzA/6h/FCAOGX3BbQMLalGqbq/bHAPc+1TRvIi647/G42LM9TkX9SndbB8WxtONa2tSsrVg3j/xiI2vSfffiZ8BAAD//zxVaLRrBAAA"
+        },
+        "mode": 420
+      },
+      {
+        "group": {
+          "name": "root"
+        },
+        "path": "/etc/systemd/system-preset/system-preset/20-scout.preset",
+        "user": {
+          "name": "root"
+        },
+        "contents": {
+          "source": "data:,enable%20scout-pod.service%0A"
+        },
+        "mode": 420
+      }
+    ]
+  }
+}
