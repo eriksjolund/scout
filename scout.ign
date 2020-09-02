@@ -13,14 +13,46 @@
     ]
   },
   "storage": {
+    "directories": [
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config",
+        "user": {
+          "name": "core"
+        },
+        "mode": 448
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd",
+        "user": {
+          "name": "core"
+        },
+        "mode": 448
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user",
+        "user": {
+          "name": "core"
+        },
+        "mode": 448
+      }
+    ],
     "files": [
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system/scout-pod.service",
+        "path": "/home/core/.config/systemd/user/scout-pod.service",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
           "compression": "gzip",
@@ -30,11 +62,11 @@
       },
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system/scout-create-datadir.service",
+        "path": "/home/core/.config/systemd/user/scout-create-datadir.service",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
           "compression": "gzip",
@@ -44,11 +76,11 @@
       },
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system/scout-mongo.service",
+        "path": "/home/core/.config/systemd/user/scout-mongo.service",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
           "compression": "gzip",
@@ -58,44 +90,156 @@
       },
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system/scout-setup-demo.service",
+        "path": "/home/core/.config/systemd/user/scout-setup-demo.service",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4yTQW8aPxDF7/4U/h9ydJbbX6rkQ1I4RBUpYomqCqGVsQeY4p3Z2uMUvn21LKRpaKtcZ55/T543s3wilJUaQ/YJO0EmO+PQOtLZcxGTQUpnArR8myE9owf1xZFkSyA/OO1vxaUtiLrbCKRL0TBFJLj07pFCXrAdiB2HF9Tw6qp+9m6Zti+2Ws3he8EE+X169ZEpYP+hmZPd5IBZsv3vpq5eaU1w4qr+c83O5WYNQE0GaUqn1LIeOCs1oWdMTC2Q2Nnn8fTusam/1ovJdNw8PT4s7A2pOWRxSSyT2TiMJYFStTiBMSbwwulo39q+6U85gB39PxqpyQF83dNmCWy1RqpSq81G30h1FUmH4Y91L8lg+IWyVcnpxOqGcFMhbYxnaplMh2GDEf7qYIz/h2Lw6kXbxKXLlvgM1qYPyWAwvz/ukxsa2pgEXXQetDHkWrjaOm1MBl8SytFwJzq6NUQbMLt1BB3Y7yHdIleQcJ+/cSwUBpcPQ29X1gNTn5i6Z74aMWcZZixc/E6/ez0+YYynyIgJ1OLYgWWCvGNRc2gd0mmzJwcUe4Ss1PKBsrgYV6frgXB/tG2JgqZkSOc70QE2rkS5nM3PAAAA//9xg5yJmwMAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/4yTQU9bMQzH7/kUnhDaKbQ7MU3KAdYe0FZW0aJpQqhKE7f1mme/JQ7Qffrp9QFjsE0cn+33+8f+21eXTHptRlhCplZJ2E0lNp6hBKlqC2ptbcRGjgrmGwpovnrW4hj1VvL2SH1eo5qTlWJ+CFrhRIwPuVPiWObiemIr8RHV//Uifq/dCK8fZcFc4I9KGcvr6s1H4UhdQ1Ovm/EdFS3uzeFs8KTWRq9+0DW32PiyWCLyoqAuamvM1aznXJsx31AWbpDVTb+MJifni9m32Xw8GS0uz8/m7pDNBRb1WZ2wXXlKNaMxM/WKI8oYVPLOPZd9lp9IRDc8Hg7N+A7DrKNNM7rBkniQG7ArONTBC0tain+NB82W4m+UG9SS96y2NzdXBmuDcCNsW4orSvhPBWvDfyp6ra5onaW2xbHcg8F2JlmK9s+fO+f6BFibsU0+IFjLvsEXWwfWFgw1k+6stArJLzG5SMUvE0KUsMV8RDLATNvyXVLl2Kt86HObuuyZsGdCx3wyYinaz1ilhg28ej0+UUp7y1gYzXzXohPGshE1F9h44v1mj+9I3Q6LOYBpTYl4DbpBCMLqiTG/8v2rLA2MHj8bvwP1WwQPt5tusL4AaYFCPxGogF927R4PhzBZmgP4jPq2AHHI6AvuHzCnBqXqfgQzDHDjU0XzLOrevR8OizFXZ1zUp3S9P3yMpzvX1KRka8F8f+IQceVr0oeL/xUAAP//ZwLf81YEAAA="
         },
         "mode": 420
       },
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system/scout-scout.service",
+        "path": "/home/core/.config/systemd/user/scout-scout.service",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6SUQU8bPxDF7/4UIyH0P5mE07+q5AMoVEJtaESCqgoh5NizYRrvzNYeQ9NPX22WAAUqKvWy2n1v/Gz/xuvLCya9MhMsIVOnJOxmElvPUIJUtdvnQcF8SwHNF89aHKPeSV4fqM8rVHNMHMtC3DCgk/hQftQo5l25FU7EeD8KXlTfK63wSp5pBbV2NmL7aJhz/F4pY3H/GrQ3bOpPBcZczoe3K3PCt5SFW2R1s8+T6dHZ9fzrfHEynVxfnJ0u3D6bcyzqszph23hKNaM5+YFh3ouzjG60JB7lFmwD+zp6yrij+FwKmi3FxwA3qiVvE7qhR7ky2AjWBuFW2HYUG0r4WrS14XVzmKT3V1lqVxzLfRzYHqulaH8f17MeDLA2Y5d8QLCWfYtPTw1YWzDUTLqx0ikkv8TkIhW/TAhRwhrzAckIM63LN0mV4zDB+8G7qUvYBfUdgb4jO5zSvYBRVDqwllYsGd/er8Lh+CFsJuUVuu2TuOatRDM7nXyghO4lfPORUppKRMfCaBabDl0jeU28MnswqykRr0BvEIKwemLMf8mnydLC5OGz9RtQv0bwcHfTr9QXIC1Q6CcCFfDLHuf/4zFMl2YPPqH+V4A4ZPQFtwtYUItSdXvc5hjg1qeK5pnqDt+Nx8WYy1Mu6lO62l4MGI83rq1JydaCefejR2x8Tbq7LX4FAAD//xN2xMVxBAAA"
+          "source": "data:;base64,H4sIAAAAAAAC/4yUUU8bORDH3/0pRkLonkzC051O8gMonISuoREJqiqEkGPPhmm8M1t7DE0/fbXZBChQwctqd/4zP8/+x/b1FZPemAmWkKlTEnYzia1nKEGq2u3zqGC+p4Dmi2ctjlEfJK+P1OcVqjkljmUhbijoJD6mnzSKeZ9uhRMx7qrgVfYu0gqv5EWsoNbORmyfBHOJ3ytlLO5DoF3nf8IZcz0f3m7MGd9TFm6R1c0+T6YnF7fzr/PF2XRye3VxvnCHbC6xqM/qhG3jKdWM5uwHhnkfnGV0oyXxKLdgGzjU0XMjO4ovQ0GzpfgEcKNa8pbQDYPIlcFGsDYIt8K2o9hQwrfQ1oa3xWGRXl9lqV1xLDsc2N47S9H+XtcbOghgbcYu+YBgLfsWn28NsLZgqJl0Y6VTSH6JyUUqfpkQooQ15iOSEWZal2+SKsdhgX8H7a4uYQ/qJwL9RPZ2SvfKjKLSgbW0Ysn4/v8qHI8fYTMpb7jbPsM17xHN7HzyHyV0r803/1NKU4noWBjNYtOhaySviVfmAGY1JeIV6B1CEFZPjPmD/jRZWpg8frZ+A+rXCB4e7vpOfQHSAoV+IlABv+zt/Hs8hunSHMAn1L8KEIeMvuC2gQW1KFW3222OAe59qmheRN3xP+NxMeb6nIv6lG62Zwjj6ca1NSnZWjDvT3PExtek+yvhVwAAAP//Vkwa1FYEAAA="
         },
         "mode": 420
       },
       {
         "group": {
-          "name": "root"
+          "name": "core"
         },
-        "path": "/etc/systemd/system-preset/20-scout.preset",
+        "path": "/var/lib/systemd/linger/core",
         "user": {
-          "name": "root"
+          "name": "core"
         },
         "contents": {
-          "source": "data:,enable%20scout-pod.service%0A"
+          "source": "data:,"
         },
         "mode": 420
+      }
+    ],
+    "links": [
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/multi-user.target.wants/scout-pod.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-pod.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/default.target.wants/scout-pod.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-pod.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/multi-user.target.wants/scout-create-datadir.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-create-datadir.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/default.target.wants/scout-create-datadir.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-create-datadir.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/multi-user.target.wants/scout-mongo.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-mongo.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/default.target.wants/scout-mongo.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-mongo.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/multi-user.target.wants/scout-setup-demo.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-setup-demo.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/default.target.wants/scout-setup-demo.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-setup-demo.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/multi-user.target.wants/scout-scout.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-scout.service"
+      },
+      {
+        "group": {
+          "name": "core"
+        },
+        "path": "/var/home/core/.config/systemd/user/default.target.wants/scout-scout.service",
+        "user": {
+          "name": "core"
+        },
+        "hard": false,
+        "target": "/var/home/core/.config/systemd/user/scout-scout.service"
       }
     ]
   }
