@@ -21,5 +21,5 @@ jobs:
           mkdir -p $HOME/.config/systemd/user
           cp checkout_testing/systemd/*.service $HOME/.config/systemd/user
           XDG_RUNTIME_DIR=/run/user/$UID systemctl --user enable --now scout-pod.service
-          sleep 10
+          sleep 30
           curl http://localhost:5000
