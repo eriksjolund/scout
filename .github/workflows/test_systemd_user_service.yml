@@ -1,0 +1,25 @@
+name: Test systemd user services
+on: 
+  push:
+    branch:
+      - systemd_services_podman_v3_github_actions
+jobs:
+  run_scout_as_user_systemd_service:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run actions/checkout for this repo
+        uses: actions/checkout@v2
+        with:
+          path: checkout_testing
+          persist-credentials: false
+      - name: Run scout and mongodb as user systemd services
+        run: |
+          loginctl enable-linger runner
+          sleep 1
+          podman pull docker.io/clinicalgenomics/scout:latest
+          podman pull docker.io/mvertes/alpine-mongo:latest
+          mkdir -p $HOME/.config/systemd/user
+          cp checkout_testing/systemd/*.service $HOME/.config/systemd/user
+          XDG_RUNTIME_DIR=/run/user/$UID systemctl --user enable --now scout-pod.service
+          sleep 10
+          curl http://localhost:5000
